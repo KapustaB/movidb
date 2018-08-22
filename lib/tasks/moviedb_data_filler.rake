@@ -9,5 +9,5 @@ end
 task :get_movie_genres => :environment do
   puts "Geting movie genres..."
 
-  ImportMovieGenresJob.perform_later
+  ImportMovieGenresJob.perform_now
 end
