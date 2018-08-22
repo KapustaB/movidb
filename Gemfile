@@ -14,8 +14,10 @@ gem 'carrierwave'
 gem 'kaminari'
 gem 'better_errors'
 gem 'devise'
-
+gem 'aws-sdk'
+gem 'fog-aws'
 gem 'jquery-rails'
+gem 'bugsnag'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.6'
