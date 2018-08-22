@@ -1,4 +1,5 @@
 class ImportPopularMoviesJob < ApplicationJob
+  require 'movie_scraper'
   queue_as :default
 
   #Every page inserts 20 movies with related cast members, characters, actors and images
