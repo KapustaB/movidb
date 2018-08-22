@@ -1,0 +1,154 @@
+<style>
+  .card.medium{
+  height:450px;
+}
+  .tabs .tab a{
+    color: rgba(0, 0, 0, 0.76);
+  } /*Black color to the text*/
+
+  .tabs .tab a:hover {
+    background-color: rgba(238, 238, 238, 0.3);
+    color:#01d277;
+  } /*Text color on hover*/
+
+  .tabs .tab a.active {
+    background-color: rgba(136, 136, 136, 0.11);
+    color:#01d277;
+  } /*Background and text color when a tab is active*/
+
+  .tabs .indicator {
+    background-color:#01d277;
+  }
+</style>
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<p id="notice"><%= notice %></p>
+
+  <div class="container" >
+    <div class="card ">
+      <div class="row">
+        <div class="card-image col s4 m4 l4 xl4" style="align-items: center">
+        <%= image_tag(@movie.images.first.poster.url) rescue nil %>
+        </div>
+
+        <div class="card-content col s8 m8 l8 xl8">
+          <div class="card-title">
+            <div class="card-title"><h4><%=link_to "#{@movie.title}", @moviedb[:homepage],
+                                                   style: "color:black;font-weight:100; background-color: transparent !important;" %>
+              (<%= @movie.release_date.strftime("%Y")  %>)
+
+            </h4></div>
+            <h6>
+              <% @movie.genres.each do|genre| %>
+                <%= link_to "#{genre.name}" , {:controller => "movies",
+                                               :action => "sort_by_genre",
+                                               :moviedb_genre_id => genre.moviedb_genre_id,
+                                               :genre_name => genre.name},
+                            :style=>'color:black;font-weight:100; background-color: transparent !important;' %>
+            <% end unless @movie.genres.blank? %>
+            </h6> </br>
+          </div>
+
+          <b> Movie status: </b>  <%= @moviedb[:status] %>
+          <b> Release date: </b>  <%= @moviedb[:release_date] %>
+          <b> Movie budget: </b>  <%= @moviedb[:budget] %><b> $ </b>
+          <b> Runtime: </b>  <%= @moviedb[:runtime] %> m
+          <p>
+            <b> Vote average: </b><%= @moviedb[:vote_average] %>
+            <b> Popularity: </b> <%= @moviedb[:popularity] %>
+            <b> Vote count: </b> <%= @moviedb[:vote_count] %>
+          </p>
+        </br><b>Overview:</b>
+          <p>
+            <%= @movie.overview %>
+          </p>
+          </br>
+          <b> Tagline: </b>  <%= @moviedb[:tagline] %>
+        </div>
+
+        <div class="card-tabs">
+          <ul class="tabs tabs-fixed-width">
+            <li class="tab"><a class="active" href="#test4">Actors</a></li>
+            <li class="tab"><a href="#test5">Crew members</a></li>
+            <li class="tab"><a href="#test6">Details</a></li>
+          </ul>
+        </div>
+        <div class="card-content grey lighten-4">
+          <div id="test4">
+
+
+
+            <ul class="collection">
+              <div class="row">
+                <%  @movie.characters.first(8).each do | character |%>
+
+                  <div class="col l3">
+                    <div class="card medium">
+                      <div class="card-image">
+                        <%= image_tag("http://image.tmdb.org/t/p/w185/" + character.actor.profile_path) rescue nil %>
+
+                      </div>
+                      <div class="card-content">
+                        <b><p><%= character.actor.name unless character.actor.nil?%></p></b>
+                        <p> <%= character.name unless character.actor.nil?%></p>
+                      </div>
+                      <div class="card-action">
+                        <a href="#"><%= link_to "More info", show_actor_path(id: character.actor.id), :style=>'color:black;font-weight:100; background-color: transparent !important;' %></a>
+                      </div>
+                    </div>
+                  </div>
+
+                <% end unless @movie.characters.blank?%>
+              </div>
+            </ul>
+
+          </div>
+          <div id="test5">
+
+            <table class="highlight">
+              <thead>
+              <tr>
+                <th>Name</th>
+                <th>Department</th>
+                <th>Job</th>
+              </tr>
+              </thead>
+
+              <tbody class="highlight">
+              <%  @movie.crew_members.first(8).each do | crew_member |%>
+              <tr>
+                <td><%= link_to crew_member.name, show_actor_path(crew_member), :style=>'color:black; background-color: transparent !important;' %></td>
+                <td><%= crew_member.department %></td>
+                <td><%= crew_member.job %></td>
+              </tr>
+              <% end unless @movie.characters.blank?%>
+
+            </table>
+
+
+
+
+          </div>
+          <div id="test6">
+
+            <p><b> Production: </b></p> </br>
+              <% @moviedb[:production_companies].each do |p|%>
+                  <p><b>Production company: </b><%= p[:name] %></p>
+              <p><b>Origin country: </b><%= p[:origin_country] %></p>
+              <% end unless @moviedb[:production_companies].nil?%>
+          </div>
+        </div>
+
+    </div>
+    </div>
+  </div>
+
+    <%= link_to 'Back', movies_path, class: "waves-effect waves-light btn-small material-icons left"%>
+
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function(){
+        $('.tabs').tabs();
+    });
+</script>
+

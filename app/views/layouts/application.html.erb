@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro' rel='stylesheet' type='text/css'>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+    <style>
+      body {
+        font-family: 'Source Sans Pro', sans-serif !important;
+      }
+      a {
+        font-family: 'Source Sans Pro', sans-serif !important;
+        -webkit-font-smoothing: antialiased !important;
+        font-weight: 600;
+        text-decoration: none;
+      }
+      p {
+        font-family: 'Source Sans Pro', sans-serif;
+      }
+    </style>
+
+
+    <title>Moviedb</title>
+    <%= csrf_meta_tags %>
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+
+
+<nav style="height: 111px">
+
+    <div class="nav-wrapper darken-1 z-depth-2" style="height: 111px; background-color: #081c24;">
+      <div class ="container" >
+      <div style="align-items: center; width: auto; margin:auto">
+        <div class="brand-logo left" style="position: absolute; float: none; margin: 0.6em 0.6em 0.6em 0">
+          <ul>
+            <li><a href="#" ><%= image_tag("logo.png", size:"81x72", class: "img-responsive center-block") %></a></li>
+              <li><a><%= link_to "Movies", movies_path, :style=>'color:white; background-color: transparent !important;' %></a></li>
+          </ul>
+
+        </div>
+
+
+
+      <div class="row s12">
+        <ul class="small right" style="margin-top: 1em;">
+          <li><a >Apps</a></li>
+          <li><a >Forums</a></li>
+          <li><a >Leaderboard</a></li>
+          <li><a >Contribute</a></li>
+          <li><a >API</a></li>
+          <li><a >Support</a></li>
+        </ul>
+      </div>
+
+      <div class="row s12" style="color:#f4f4f4; margin-top: 2em">
+        <ul class="right center" style="vertical-align: middle; float:none">
+          <li><a >Login</a></li>
+          <li><a >Sign in</a></li>
+        </ul>
+      </div>
+      </div>
+      </div>
+  </div>
+
+  </nav>
+
+  <%= yield %>
+  </body>
+</html>
+
