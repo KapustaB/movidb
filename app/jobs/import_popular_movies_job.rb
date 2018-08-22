@@ -34,7 +34,7 @@ class ImportPopularMoviesJob < ApplicationJob
       import_cast_members(movie) unless movie.id.nil?
 
       store_movie_poster(m, movie)
-    end
+    end unless json[:results].nil?
   end
 
   def create_movie(m)
