@@ -1,0 +1,30 @@
+
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<p id="notice"><%= notice %></p>
+
+<div class="container" >
+
+  <div class="col s12 m7">
+
+    <h2 class="header"><%= @actor.name %></h2>
+
+    <div class="card horizontal">
+      <div class="card-image">
+        <%= image_tag("http://image.tmdb.org/t/p/w185/" + @actor.profile_path) rescue nil %>
+      </div>
+
+      <div class="card-stacked">
+
+        <div class="card-content">
+          <p><b>Known for:</b> <%= @moviedb_actor[:known_for] %></p>
+
+          <p><b>Popularity: </b><%= @moviedb_actor[:popularity] %></p>
+          <p><b>Birthday: </b><%= @moviedb_actor[:birthday] %></p>
+          <p><b>Biography: </b><%= @moviedb_actor[:biography] %></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+

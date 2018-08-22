@@ -1,0 +1,2 @@
+class MovieScraper
+end
