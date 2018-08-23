@@ -2,6 +2,8 @@ class ImportCastMembersService
 
   attr_accessor :movie, :movie_credits
 
+  NUM_OF_IMPORT_CREW = 10
+
   def initialize(params)
     @movie = params[:movie]
     @movie_credits = params[:movie_credits]
@@ -18,7 +20,7 @@ class ImportCastMembersService
   private
 
   def import_movie_characters(characters)
-    characters.map do |c|
+    characters.first(NUM_OF_IMPORT_CREW).map do |c|
       actor = find_or_create_actor(c)
       character = create_character(c)
 
@@ -41,7 +43,7 @@ class ImportCastMembersService
   end
 
   def import_or_find_movie_crew_members(crew_members)
-    crew_members.map do |cm|
+    crew_members.first(NUM_OF_IMPORT_CREW).map do |cm|
       CrewMember.find_or_create_by(moviedb_people_id: cm[:id]) do |crew_member|
         crew_member.moviedb_people_id = cm[:id],
         crew_member.name = cm[:name],
