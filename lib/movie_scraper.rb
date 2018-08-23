@@ -38,7 +38,7 @@ class MovieScraper
   end
 
   def all_genres
-    self.class.get("3/genre/movie/list?api_key=#{API_KEY}&&language=en-US")
+    self.class.get("/3/genre/movie/list?api_key=#{API_KEY}&&language=en-US")
   end
 
 end

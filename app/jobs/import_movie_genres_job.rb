@@ -6,6 +6,7 @@ class ImportMovieGenresJob < ApplicationJob
 
 
   def perform(*args)
+    @movie_scraper = MovieScraper.new
     response = @movie_scraper.all_genres
 
     genres = parse_response_to_json(response)
