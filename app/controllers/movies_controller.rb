@@ -27,10 +27,8 @@ class MoviesController < ApplicationController
 
   #GET /like movie
   def like
-    likes = (JSON.parse cookies[:liked_movies]) unless cookies[:liked_movies].blank?
-
-    likes.nil? ? likes = params[:id].to_i : likes.push(params[:id].to_i)
-    likes = JSON.generate(likes) unless likes.nil?
+    likes = parse_likes_from_cookies
+    likes = set_movie_likes(likes)
 
     cookies[:liked_movies] = likes
 
@@ -40,14 +38,13 @@ class MoviesController < ApplicationController
 
   #GET /unlike movie
     def unlike
-      likes = cookies[:likes][:liked_movies]
-      likes.nil? ? likes = [] : likes.delete(params[:liked_movie_id])
+      likes = parse_likes_from_cookies
+      likes = set_movie_likes(likes)
 
-      cookies[:likes] = {
-          :liked_movies => likes,
-          :expires => 1.year.from_now
-      }
-      Movie.find(params[:liked_movie_id]).likes -= 1
+      cookies[:liked_movies] = likes
+
+      @movie.likes -= 1
+      @movie.save
     end
 
   def search
@@ -61,6 +58,20 @@ class MoviesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
       @movie = Movie.find(params[:id])
+    end
+
+    def add_movie_like(likes)
+      likes.nil? ? likes = params[:id].to_i : likes.push(params[:id].to_i)
+      JSON.generate(likes) unless likes.nil?
+    end
+
+    def delete_movie_like(likes)
+      likes = likes.push(params[:id].to_i)
+      JSON.generate(likes) unless likes.nil?
+    end
+
+    def parse_likes_from_cookies
+      (JSON.parse cookies[:liked_movies]) unless cookies[:liked_movies].blank?
     end
 
     def select_movies_by_genre
