@@ -45,6 +45,15 @@
       color: #000;
     }
   }
+
+  .dropdown-content li>a {
+    color: #000 !important;
+    font-weight: 200;
+
+  }
+  .dropdown-content li>a:hover{
+    color: #01d277 !important;
+  }
 </style>
 <nav>
   <div class="nav-wrapper">
@@ -61,8 +70,36 @@
 </nav>
 
 
+
 <div class ="container" style="margin-top: 1em;">
-  <h4><%= @genre.nil? ? "Popular" : @genre %> movies</h4>
+
+<div class="row">
+  <div class=" col l6">
+    <h4><%= @genre.nil? ? "Popular" : @genre %> movies</h4>
+  </div>
+
+  <div class=" col l2" style="align-text: right; padding-top: 2em">
+  <!-- Dropdown Trigger -->
+  <% unless @genres.nil? %>
+    <a class='dropdown-trigger btn' href='#' data-target='dropdown1' style="background-color: transparent; font-weight: 200 ;color: dimgrey; ">Sort by genres</a>
+  <% end %>
+
+  <!-- Dropdown Structure -->
+  <ul id='dropdown1' class='dropdown-content'>
+    <% @genres.each do |genre| %>
+      <li> <%= link_to genre.name , {:controller => "movies",
+                                     :action => "sort_by_genre",
+                                     :moviedb_genre_id => genre.moviedb_genre_id,
+                                     :genre_name => genre.name}
+      %></li>
+    <% end unless @genres.nil?%>
+  </ul>
+  </div>
+</div>
+
+
+
+
 
   <div class="row">
     <% @movies.each do |movie| %>
@@ -75,7 +112,9 @@
 
             </div>
             <div class="card-stacked">
-              <div class="card-title"><%= link_to movie.title, movie_path(movie), :style=>'color:black; background-color: transparent !important;' %></div>
+              <div class="card-title">
+                <%= link_to movie.title, movie_path(movie), :style=>'color:black; background-color: transparent !important;' %>
+              </div>
               <div class="card-content">
                 <p>
                   <%= movie.overview[0..200].gsub(/\s\w+$/,'...') %>
@@ -83,6 +122,14 @@
               </div>
               <div class="card-action">
                 <a href="#"><%= link_to "More info", movie_path(movie), :style=>'color:black;font-weight:100; background-color: transparent !important;' %></a>
+                <%# if cookies[:liked_movies].nil? %>
+<!--                    <a href="#"><%#= link_to "Like", like_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
+                <%# else %>
+                    <%# if  cookies[:liked_movies].include? movie%>
+<!--                    <a href="#"><%#= link_to "Unlike", unlike_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
+                    <%# end%>
+<!--                  <a href="#"><%#= link_to "Like", like_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
+                <%# end %>
               </div>
             </div>
           </div>
@@ -101,3 +148,8 @@
 
 
 </div>
+
+
+<script>
+    $('.dropdown-trigger').dropdown();
+</script>

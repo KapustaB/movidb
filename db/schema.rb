@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180821172533) do
+ActiveRecord::Schema.define(version: 20180822204525) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -76,6 +76,7 @@ ActiveRecord::Schema.define(version: 20180821172533) do
     t.date "release_date"
     t.string "image"
     t.integer "moviedb_id"
+    t.integer "likes", default: 0
     t.index ["moviedb_id"], name: "index_movies_on_moviedb_id", unique: true
   end
 

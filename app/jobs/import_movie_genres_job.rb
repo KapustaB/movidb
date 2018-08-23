@@ -1,16 +1,16 @@
 class ImportMovieGenresJob < ApplicationJob
   queue_as :default
-  require 'httparty'
+  require 'movie_scraper'
 
   API_KEY = ENV["MOVIEDB_API_KEY"]
-  API_ENDPOINT = "https://api.themoviedb.org/3/genre/movie/list?api_key=#{API_KEY}&&language=en-US"
 
 
   def perform(*args)
-    response = HTTParty.get(API_ENDPOINT)
-    json = JSON.parse(response.body, symbolize_names: true)
+    response = @movie_scraper.all_genres
 
-    insert_genres_into_db(json) unless json.empty?
+    genres = parse_response_to_json(response)
+
+    insert_genres_into_db(genres) unless genres.empty?
   end
 
   private
@@ -21,5 +21,10 @@ class ImportMovieGenresJob < ApplicationJob
     end
   end
 
+  def parse_response_to_json(response)
+    JSON.parse(response.body, symbolize_names: true)
+  end
+
 end
+
 

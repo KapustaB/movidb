@@ -9,4 +9,6 @@ Rails.application.routes.draw do
   get 'search_movies' => 'movies#search'
   get 'show_actor' => 'actors#show'
   get 'show_movies_by_genre' => 'movies#sort_by_genre'
+  get 'like_movie' => 'movies#like'
+  get 'unlike_movie' => 'movie#unlike'
 end
