@@ -123,7 +123,7 @@
               <div class="card-action">
                 <a href="#"><%= link_to "More info", movie_path(movie), :style=>'color:black;font-weight:100; background-color: transparent !important;' %></a>
                 <% if !cookies[:liked_movies].nil?  %>
-                    <% if JSON.parse(cookies[:liked_movies]).include? movie.id.to_s %>
+                    <% if (JSON.parse(cookies[:liked_movies]).include? movie.id.to_i) %>
                       <%= link_to "Dislike", unlike_movie_path(id: movie.id), method: :put , :style => 'color:#01d277;background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%>
                     <% else %>
                       <%= link_to "Like", like_movie_path(id: movie.id), method: :put , :style =>'color:#01d277; background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%>

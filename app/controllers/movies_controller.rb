@@ -28,7 +28,7 @@ class MoviesController < ApplicationController
   #PUT /like movie
   def like
     likes = parse_likes_from_cookies
-    likes = set_movie_likes(likes)
+    likes = add_movie_like(likes)
 
     cookies[:liked_movies] = likes
 
@@ -39,7 +39,7 @@ class MoviesController < ApplicationController
   #PUT /unlike movie
     def unlike
       likes = parse_likes_from_cookies
-      likes = set_movie_likes(likes)
+      likes = delete_movie_like(likes)
 
       cookies[:liked_movies] = likes
 
@@ -61,7 +61,13 @@ class MoviesController < ApplicationController
     end
 
     def add_movie_like(likes)
-      likes.nil? ? likes = params[:id].to_i : likes.push(params[:id].to_i)
+      if likes.nil?
+        likes= Array.new
+        likes.push(params[:id].to_i)
+      else
+        likes.push(params[:id].to_i)
+      end
+
       JSON.generate(likes) unless likes.nil?
     end
 
