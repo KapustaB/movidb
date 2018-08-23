@@ -1,13 +1,13 @@
 class MoviesController < ApplicationController
-require 'movie_scraper'
-require 'movies_query'
   before_action :set_movie, only: [:show, :edit, :update, :destroy, :like]
+  require 'movie_scraper'
+  require 'movies_query'
+  require 'json'
 
   # GET /movies
   def index
     @movies = Movie.includes(:images).page(params[:page]).per(14)
     @genres = Genre.all.select('name, moviedb_genre_id')
-    binding.pry
   end
 
   # GET /movies/1
@@ -22,22 +22,20 @@ require 'movies_query'
     @movies = @movies.page(params[:page]).per(14)
     @genre = params[:genre_name]
 
-    render "index"
+    render action: "index"
   end
 
   #GET /like movie
   def like
-    likes = cookies[:liked_movies] unless cookies[:liked_movies].blank?
-    (likes = Set.new) if likes.nil?
+    likes = (JSON.parse cookies[:liked_movies]) unless cookies[:liked_movies].blank?
 
-    likes.add(params[:id])
+    likes.nil? ? likes = params[:id].to_i : likes.push(params[:id].to_i)
+    likes = JSON.generate(likes) unless likes.nil?
 
     cookies[:liked_movies] = likes
 
-    @movie.likes = 1
+    @movie.likes += 1
     @movie.save
-
-    render action: "index"
   end
 
   #GET /unlike movie

@@ -122,14 +122,16 @@
               </div>
               <div class="card-action">
                 <a href="#"><%= link_to "More info", movie_path(movie), :style=>'color:black;font-weight:100; background-color: transparent !important;' %></a>
-                <%# if cookies[:liked_movies].nil? %>
-<!--                    <a href="#"><%#= link_to "Like", like_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
-                <%# else %>
-                    <%# if  cookies[:liked_movies].include? movie%>
-<!--                    <a href="#"><%#= link_to "Unlike", unlike_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
-                    <%# end%>
-<!--                  <a href="#"><%#= link_to "Like", like_movie_path({ id: movie }), :style=>'color:#01d277; background-color: transparent !important;'%> </a><%#= movie.likes %>-->
-                <%# end %>
+                <% if !cookies[:liked_movies].nil?  %>
+                    <% if JSON.parse(cookies[:liked_movies]).include? movie.id.to_s %>
+                      <%= link_to "Dislike", unlike_movie_path(id: movie.id), method: :put , :style => 'color:#01d277;background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%>
+                    <% else %>
+                      <%= link_to "Like", like_movie_path(id: movie.id), method: :put , :style =>'color:#01d277; background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%>
+                    <%end%>
+                  <b><span id="Likes<%= movie.id %>"><%=  movie.likes %></span></b>
+                <% else %>
+                  <%= link_to "Like", like_movie_path(id: movie.id), method: :put , :style => 'color:#01d277; background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%><%= movie.likes %>
+                <%end%>
               </div>
             </div>
           </div>
@@ -152,4 +154,23 @@
 
 <script>
     $('.dropdown-trigger').dropdown();
+</script>
+
+<script>
+    function heart_like(e){
+        var like = document.getElementById("Movie"+e);
+        var likes_count = document.getElementById("Likes"+e);
+
+        if(like.classList.contains("heart_liked")) {
+            like.classList.remove("heart_liked");
+            like.setAttribute('href',"/movies/" + e + "/unlike");
+            like.innerHTML = "Like";
+            likes_count.innerHTML =  parseInt(likes_count.innerHTML)-1;
+        }else{
+            like.classList.add("heart_liked");
+            like.setAttribute('href',"/movies/" + e + "/like");
+            like.innerHTML = "Dislike";
+            likes_count.innerHTML = parseInt(likes_count.innerHTML)+1;
+        }
+    }
 </script>
