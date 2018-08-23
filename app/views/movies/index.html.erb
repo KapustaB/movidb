@@ -128,7 +128,7 @@
                     <% else %>
                       <%= link_to "Like", like_movie_path(id: movie.id), method: :put , :style =>'color:#01d277; background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%>
                     <%end%>
-                  <b><%=  movie.likes %></b>
+                  <b><span id="Likes<%= movie.id %>"><%=  movie.likes %></span></b>
                 <% else %>
                   <%= link_to "Like", like_movie_path(id: movie.id), method: :put , :style => 'color:#01d277; background-color: transparent !important;', id: "Movie#{movie.id}" , :remote => true, onclick: "heart_like(#{movie.id})"%><%= movie.likes %>
                 <%end%>
