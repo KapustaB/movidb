@@ -25,7 +25,7 @@ class MoviesController < ApplicationController
     render action: "index"
   end
 
-  #GET /like movie
+  #PUT /like movie
   def like
     likes = parse_likes_from_cookies
     likes = set_movie_likes(likes)
@@ -36,7 +36,7 @@ class MoviesController < ApplicationController
     @movie.save
   end
 
-  #GET /unlike movie
+  #PUT /unlike movie
     def unlike
       likes = parse_likes_from_cookies
       likes = set_movie_likes(likes)
