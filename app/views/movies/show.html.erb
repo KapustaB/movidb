@@ -77,7 +77,6 @@
           <div id="test4">
 
 
-
             <ul class="collection">
               <div class="row">
                 <%  @movie.characters.first(8).each do | character |%>
@@ -93,7 +92,11 @@
                         <p> <%= character.name unless character.actor.nil?%></p>
                       </div>
                       <div class="card-action">
-                        <a href="#"><%= link_to "More info", show_actor_path(id: character.actor.id), :style=>'color:black;font-weight:100; background-color: transparent !important;' %></a>
+                        <% unless character.actor.nil? %>
+                          <a href="#"><%= (link_to "More info", show_actor_path(id: character.actor.id),
+                                                  :style=>'color:black;font-weight:100; background-color: transparent !important;')
+                                           %></a>
+                         <% end %>
                       </div>
                     </div>
                   </div>
@@ -101,7 +104,6 @@
                 <% end unless @movie.characters.blank?%>
               </div>
             </ul>
-
           </div>
           <div id="test5">
 
@@ -117,7 +119,7 @@
               <tbody class="highlight">
               <%  @movie.crew_members.first(8).each do | crew_member |%>
               <tr>
-                <td><%= link_to crew_member.name, show_actor_path(crew_member), :style=>'color:black; background-color: transparent !important;' %></td>
+                <td><b><%= crew_member.name %></b></td>
                 <td><%= crew_member.department %></td>
                 <td><%= crew_member.job %></td>
               </tr>

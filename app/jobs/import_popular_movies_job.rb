@@ -16,7 +16,7 @@ class ImportPopularMoviesJob < ApplicationJob
         add_genres_to_movie(movie, select_movie_genres(m))
         add_movie_poster(m, movie)
 
-        movie_credits = get_movie_credits(movie.id) unless movie.id.nil?
+        movie_credits = get_movie_credits(movie.moviedb_id) unless movie.id.nil?
 
         ImportCastMembersService.new({movie: movie, movie_credits: movie_credits}).perform unless movie.id.nil?
 
