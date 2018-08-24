@@ -1,12 +1,12 @@
-# Web app for static retroreflection testing 
-
+# Movie app
 
 
 ## Installation:
 
 ## Install Ruby & Rails
-ruby -v ruby 2.5.1
-rails -v Rails 5.1.6
+- ruby -v ruby 2.5.1
+- rails -v Rails 5.1.6
+
 
 Follow these easy steps to install and start the app:
 
@@ -21,39 +21,39 @@ Setup database in config/database.yml
 	
 Next, execute the database migrations/schema setup:
 
-	```bundle exec rake db:setup```
+	bundle exec rake db:setup
 or
   
-	```bundle exec rake db:schema:load```
+	bundle exec rake db:schema:load
 	
 
 ### Start the app
 
 You're ready to localize your app:
 
-   ```bundle exec rails server```
+    bundle exec rails server
 	
 
 ### Import data from movidb API 
 
 1. Import all genres
-  
+
 	```rake get_movie_genres```
   
 2. Import 100 popular movies and crew_members/actors  
-```
-	rake get_100_popular_movies
-```
+
+	```rake get_100_popular_movies```
+
 
 ### ENV file
-```
+
 	BUGSNAG_API_KEY
 	S3_KEY
 	S3_SECRET
 	S3_REGION
 	S3_BUCKET_NAME
-  MOVIEDB_API_KEY
-```
+  	MOVIEDB_API_KEY
+
 
 
 
