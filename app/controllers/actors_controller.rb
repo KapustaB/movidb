@@ -13,7 +13,8 @@ class ActorsController < ApplicationController
   def show
     movie_scraper = MovieScraper.new
     response = movie_scraper.person_details(@actor.moviedb_people_id)
-    @moviedb_actor =JSON.parse(response.body, symbolize_names: true)
+
+    @moviedb_actor = JSON.parse(response.body, symbolize_names: true)
   end
 
   # GET /actors/new

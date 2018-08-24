@@ -20,9 +20,9 @@ class ImportCastMembersService
   private
 
   def import_movie_characters(characters)
-    characters.first(NUM_OF_IMPORT_CREW).map do |c|
-      actor = find_or_create_actor(c)
-      character = create_character(c)
+    characters.first(NUM_OF_IMPORT_CREW).map do |character|
+      actor = find_or_create_actor(character)
+      character = create_character(character)
 
 
       character.actor = actor unless character.nil? || actor.nil?
@@ -30,12 +30,12 @@ class ImportCastMembersService
     end
   end
 
-  def find_or_create_actor(c)
-    Actor.find_or_create_by(moviedb_people_id: c[:id]) do |actor|
-      actor.moviedb_people_id = c[:id],
-      actor.profile_path = c[:profile_path],
-      actor.name = c[:name]
-    end
+  def find_or_create_actor(actor)
+     Actor.create(
+         profile_path: actor[:profile_path],
+         moviedb_people_id: actor[:id],
+         name: actor[:name]
+     ) unless Actor.exists?(moviedb_people_id: actor[:id])
   end
 
   def create_character(c)
@@ -43,26 +43,26 @@ class ImportCastMembersService
   end
 
   def import_or_find_movie_crew_members(crew_members)
-    crew_members.first(NUM_OF_IMPORT_CREW).map do |cm|
-      CrewMember.find_or_create_by(moviedb_people_id: cm[:id]) do |crew_member|
-        crew_member.moviedb_people_id = cm[:id],
-        crew_member.name = cm[:name],
-        crew_member.department = cm[:department],
-        crew_member.job = cm[:job]
-      end
+    crew_members.first(NUM_OF_IMPORT_CREW).map do |crew_member|
+
+      CrewMember.create(
+        moviedb_people_id: crew_member[:id],
+        name: crew_member[:name],
+        department: crew_member[:department],
+        job: crew_member[:job]
+      ) unless CrewMember.exists?(moviedb_people_id: crew_member[:id])
     end
   end
 
   def bind_characters_to_movie(characters, movie)
-    characters.each { |c| movie.characters << c unless movie.characters.exists?(c.id) }
+    characters.each { |character| movie.characters << character unless movie.characters.exists?(character.id) }
   end
 
   def bind_crew_members_to_movie(crew_members, movie)
-    crew_members.each { |c| movie.crew_members << c unless movie.crew_members.exists?(c.id) }
+    crew_members.each { |crew_member| movie.crew_members << crew_member unless movie.crew_members.exists?(crew_member.id) }
   end
 
-
-  def character_params(c)
-    {name: c[:character], order: c[:order]}
+  def character_params(character)
+    {name: character[:character], order: character[:order]}
   end
 end

@@ -38,16 +38,16 @@ class ImportPopularMoviesJob < ApplicationJob
     parse_response_to_json(credits)
   end
 
-  def create_movie(m)
-    Movie.create!(movie_params(m)) unless Movie.exists?(moviedb_id: m[:id])
+  def create_movie(movie)
+    Movie.create!(movie_params(movie)) unless Movie.exists?(moviedb_id: movie[:id])
   end
 
-  def movie_params(m)
-    {title: m[:title], overview: m[:overview], release_date: m[:release_date], moviedb_id: m[:id]}
+  def movie_params(movie)
+    {title: movie[:title], overview: movie[:overview], release_date: movie[:release_date], moviedb_id: movie[:id]}
   end
 
-  def select_movie_genres(m)
-    Genre.where(moviedb_genre_id: m[:genre_ids])
+  def select_movie_genres(movie)
+    Genre.where(moviedb_genre_id: movie[:genre_ids])
   end
 
   def add_genres_to_movie(movie, genres)

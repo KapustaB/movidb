@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :edit, :update, :destroy, :like]
+  before_action :set_movie, only: [:show, :edit, :update, :destroy, :like, :unlike]
   require 'movie_scraper'
   require 'movies_query'
   require 'json'

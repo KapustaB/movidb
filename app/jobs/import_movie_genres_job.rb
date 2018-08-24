@@ -16,9 +16,12 @@ class ImportMovieGenresJob < ApplicationJob
 
   private
 
-  def insert_genres_into_db(json)
-    json[:genres].map do |e|
-      Genre.create(moviedb_genre_id: e[:id], name: e[:name])
+  def insert_genres_into_db(genres)
+    genres[:genres].map do |genre|
+      Genre.create(
+          moviedb_genre_id: genre[:id],
+          name: genre[:name]
+      ) unless Genre.exists?(moviedb_genre_id: genre[:id])
     end
   end
 
