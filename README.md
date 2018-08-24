@@ -1,24 +1,60 @@
-# README
+# Web app for static retroreflection testing 
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
 
-Things you may want to cover:
 
-* Ruby version
+## Installation:
 
-* System dependencies
+## Install Ruby & Rails
+ruby -v ruby 2.5.1
+rails -v Rails 5.1.6
 
-* Configuration
+Follow these easy steps to install and start the app:
 
-* Database creation
+### Set up Rails app
 
-* Database initialization
+First, install the gems required by the application:
 
-* How to run the test suite
+	bundle install 
 
-* Services (job queues, cache servers, search engines, etc.)
+Setup database in config/database.yml
 
-* Deployment instructions
+	
+Next, execute the database migrations/schema setup:
 
-* ...
+	```bundle exec rake db:setup```
+or
+  
+	```bundle exec rake db:schema:load```
+	
+
+### Start the app
+
+You're ready to localize your app:
+
+   ```bundle exec rails server```
+	
+
+### Import data from movidb API 
+
+1. Import all genres
+  
+	```rake get_movie_genres```
+  
+2. Import 100 popular movies and crew_members/actors  
+```
+	rake get_100_popular_movies
+```
+
+### ENV file
+```
+	BUGSNAG_API_KEY
+	S3_KEY
+	S3_SECRET
+	S3_REGION
+	S3_BUCKET_NAME
+  MOVIEDB_API_KEY
+```
+
+
+
+	
