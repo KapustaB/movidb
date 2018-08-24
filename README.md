@@ -1,7 +1,4 @@
-# Movie app
-
-
-## Installation:
+# Movie app - Installation guide
 
 ## Install Ruby & Rails
 - ruby -v ruby 2.5.1
